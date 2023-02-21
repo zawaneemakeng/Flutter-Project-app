@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layout/pages/detail.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +19,9 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(children: [
+          const SizedBox(
+            height: 17,
+          ),
           MyBox(
               'บริติช ช็อตแฮร์ (British Shorthair)',
               'British shorthair เป็นหนึ่งในสายพันธุ์แมวที่เก่าแก่ที่สุดของประเทศอังกฤษ',
@@ -34,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           ),
           MyBox(
               'แมววิเชียรมาศ (Siamese cat)',
-              'แมวพันธุ์วิเชียรมาศ หรือ แมวสยาม (Siamese cat) ที่เป็นดั่งตัวแทนสายพันธุ์แมวแห่งประเทศไทย ที่นอกจากจะมีเอกลักษณ์จากลวดลายและสีขนบนตัวอันงดงามแล้ว ยังมีลักษณะนิสัยที่เป็นมิตร ขี้อ้อน',
+              'แมวพันธุ์วิเชียรมาศ หรือ แมวสยาม (Siamese cat) ที่เป็นดั่งตัวแทนสายพันธุ์แมวแห่งประเทศไทย ที่นอกจากจะมีเอกลักษณ์จากลวดลายและสีขนบนตัว',
               'https://cdn.pixabay.com/photo/2020/06/20/11/08/siamese-cat-5320568_960_720.jpg')
         ]),
       ),
@@ -76,6 +80,20 @@ class _HomePageState extends State<HomePage> {
             style: const TextStyle(
                 fontSize: 14, color: Color.fromARGB(255, 227, 227, 227)),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextButton(
+              onPressed: () {
+                print("Next Page ");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const DetailPage())));
+              },
+              child: const Text(
+                "Read more",
+              )),
         ],
       ),
     );
