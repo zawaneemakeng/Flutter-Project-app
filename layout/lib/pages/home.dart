@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:layout/pages/detail.dart';
 
@@ -17,36 +18,37 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color.fromARGB(255, 16, 121, 85),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(children: [
-          const SizedBox(
-            height: 17,
-          ),
-          MyBox(
-              'บริติช ช็อตแฮร์ (British Shorthair)',
-              'British shorthair เป็นหนึ่งในสายพันธุ์แมวที่เก่าแก่ที่สุดของประเทศอังกฤษ',
-              'https://cdn.pixabay.com/photo/2022/01/29/10/59/cat-6977088_960_720.jpg'),
-          const SizedBox(
-            height: 25,
-          ),
-          MyBox(
-              'สก๊อตทิช โฟลด์ (Scottish fold)',
-              'แมวมันช์กิ้น เป็นแมวสายพันธุ์ขนาดกลาง ขาสั้นกุดและลำตัวยาว มีคนเปรียบเปรยไว้ว่า แมวสายพันธุ์นี้เคลื่อนที่เหมือนตัวเฟร์ริต',
-              'https://cdn.pixabay.com/photo/2019/04/17/18/58/scottish-fold-4135062_960_720.jpg'),
-          const SizedBox(
-            height: 25,
-          ),
-          MyBox(
-              'แมววิเชียรมาศ (Siamese cat)',
-              'แมวพันธุ์วิเชียรมาศ หรือ แมวสยาม (Siamese cat) ที่เป็นดั่งตัวแทนสายพันธุ์แมวแห่งประเทศไทย ที่นอกจากจะมีเอกลักษณ์จากลวดลายและสีขนบนตัว',
-              'https://cdn.pixabay.com/photo/2020/06/20/11/08/siamese-cat-5320568_960_720.jpg')
-        ]),
-      ),
+          padding: const EdgeInsets.all(8.0),
+          child: FutureBuilder(
+            builder: (context, snapshot) {
+              var data = json.decode(snapshot.data.toString()); //to list format
+              return ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  return MyBox(data[index]['title'], data[index]['subtitle'],
+                      data[index]['image_url'], data[index]['details']);
+                },
+                itemCount: data.length,
+              );
+            },
+            future:
+                DefaultAssetBundle.of(context).loadString('assets/data.json'),
+          )),
     );
   }
 
-  Widget MyBox(String title, String detail, String imageUrl) {
+  Widget MyBox(
+    String title,
+    String subtitle,
+    String imageUrl,
+    String details,
+  ) {
+    var v1, v2, v3, v4;
+    v1 = title;
+    v2 = subtitle;
+    v3 = imageUrl;
+    v4 = details;
     return Container(
+      margin: EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
       //color: const Color.fromARGB(255, 152, 205, 186),
       height: 160,
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
             height: 5,
           ),
           Text(
-            detail,
+            subtitle,
             style: const TextStyle(
                 fontSize: 14, color: Color.fromARGB(255, 227, 227, 227)),
           ),
@@ -89,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: ((context) => const DetailPage())));
+                        builder: ((context) => DetailPage(v1, v2, v3, v4))));
               },
               child: const Text(
                 "Read more",
