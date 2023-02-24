@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:layout/pages/detail.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,17 +23,21 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
             builder: (context, snapshot) {
-              var data = json.decode(snapshot.data.toString()); //to list format
+              //var data = json.decode(snapshot.data.toString()); //to list format
+              //data[index]['title'] if from json
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
-                  return MyBox(data[index]['title'], data[index]['subtitle'],
-                      data[index]['image_url'], data[index]['details']);
+                  return MyBox(
+                      snapshot.data[index]['title'],
+                      snapshot.data[index]['subtitle'],
+                      snapshot.data[index]['image_url'],
+                      snapshot.data[index]['details']);
                 },
-                itemCount: data.length,
+                itemCount: snapshot.data.length,
               );
             },
-            future:
-                DefaultAssetBundle.of(context).loadString('assets/data.json'),
+            future: getData(),
+            //future:  DefaultAssetBundle.of(context).loadString('assets/data.json'),
           )),
     );
   }
@@ -48,10 +54,10 @@ class _HomePageState extends State<HomePage> {
     v3 = imageUrl;
     v4 = details;
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
       //color: const Color.fromARGB(255, 152, 205, 186),
-      height: 160,
+      height: 180,
       decoration: BoxDecoration(
           //color: const Color.fromARGB(255, 152, 205, 186),
           image: DecorationImage(
@@ -70,20 +76,20 @@ class _HomePageState extends State<HomePage> {
           Text(
             title,
             style: const TextStyle(
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 227, 227, 227)),
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
           Text(
             subtitle,
             style: const TextStyle(
-                fontSize: 14, color: Color.fromARGB(255, 227, 227, 227)),
+                fontSize: 17, color: Color.fromARGB(255, 227, 227, 227)),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           TextButton(
               onPressed: () {
@@ -95,9 +101,20 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text(
                 "Read more",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               )),
         ],
       ),
     );
+  }
+
+  Future getData() async {
+    //https://raw.githubusercontent.com/zawaneemakeng/BasicAPI/main/data2.json
+
+    var url = Uri.https(
+        'raw.githubusercontent.com', 'zawaneemakeng/BasicAPI/main/data2.json');
+    var response = await http.get(url);
+    var result = json.decode(response.body);
+    return result;
   }
 }

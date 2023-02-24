@@ -33,13 +33,16 @@ class _DetailPageState extends State<DetailPage> {
           children: [
             Text(_v1,
                 style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 16, 121, 85))),
             const SizedBox(
               height: 15,
             ),
-            Text(_v2),
+            Text(
+              _v2,
+              style: TextStyle(fontSize: 20),
+            ),
             const SizedBox(
               height: 15,
             ),
@@ -53,7 +56,7 @@ class _DetailPageState extends State<DetailPage> {
             const SizedBox(
               height: 25,
             ),
-            Text(_v4)
+            Text(_v4, style: TextStyle(fontSize: 18))
           ],
         ),
       ),

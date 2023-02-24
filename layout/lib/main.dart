@@ -10,9 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "เเอพเเนะนำพันธุ์เเมว",
       home: HomePage(),
+      theme: ThemeData(fontFamily: 'Khanom'),
       debugShowCheckedModeBanner: false,
     );
   }
