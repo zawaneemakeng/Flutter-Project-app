@@ -16,11 +16,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("เเอพเเนะนำพันธุ์เเมว"),
-        backgroundColor: const Color.fromARGB(255, 16, 121, 85),
+        title: const Text("About Cat"),
+        backgroundColor: const Color(0xff5b3775),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: FutureBuilder(
             builder: (context, snapshot) {
               //var data = json.decode(snapshot.data.toString()); //to list format

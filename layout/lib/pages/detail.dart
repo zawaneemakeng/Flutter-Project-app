@@ -25,7 +25,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("details"),
-        backgroundColor: const Color.fromARGB(255, 16, 121, 85),
+        backgroundColor: const Color(0xff5b3775),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
                 style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 16, 121, 85))),
+                    color: Color(0xff5b3775))),
             const SizedBox(
               height: 15,
             ),
