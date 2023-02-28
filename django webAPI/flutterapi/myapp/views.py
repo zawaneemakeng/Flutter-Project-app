@@ -1,6 +1,35 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from  rest_framework import status
+from .serializers import TodolistSerializer
+from .models import Todolist
+
+
+
+# GET Data
+@api_view(['GET'])
+def all_todolist(request):
+    all_todolist = Todolist.objects.all()#select data from table todolist
+    serializer = TodolistSerializer(all_todolist,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def post_todolist(request):
+    if request.method == 'POST':
+        serializer = TodolistSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND)
+    
+
+
+
+
+
 data = [{
         "title": "บริติช ช็อตแฮร์ (British Shorthair)",
         "subtitle": "British shorthair เป็นหนึ่งในสายพันธุ์แมวที่เก่าแก่ที่สุดของประเทศอังกฤษ",
@@ -35,3 +64,5 @@ data = [{
 
 def Home(request):
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
+
+
