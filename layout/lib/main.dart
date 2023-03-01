@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:layout/pages/add.dart';
 import 'package:layout/pages/cal.dart';
-import 'package:layout/pages/doctor.dart';
 import 'package:layout/pages/home.dart';
 
 void main() {
@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const MainPage(),
-      theme: ThemeData(fontFamily: 'Khanom'),
+      theme: ThemeData(
+          fontFamily: 'Khanom',
+          appBarTheme:
+              const AppBarTheme(backgroundColor: const Color(0xff5b3775))),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -30,7 +33,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   static const List<Widget> tabs = <Widget>[
-    DoctorPage(),
+    AddPage(),
     HomePage(),
     CalculatPage(),
   ];
@@ -52,7 +55,7 @@ class _MainPageState extends State<MainPage> {
         currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.event),
+            icon: Icon(Icons.add),
             label: 'Doctor',
           ),
           BottomNavigationBarItem(

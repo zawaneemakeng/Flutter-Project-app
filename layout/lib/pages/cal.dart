@@ -21,7 +21,6 @@ class _CalculatPageState extends State<CalculatPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cal"),
-        backgroundColor: const Color(0xff5b3775),
       ),
       body: ListView(
         children: [
@@ -88,7 +87,7 @@ class _CalculatPageState extends State<CalculatPage> {
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.fromLTRB(30, 20, 30, 20)),
                       textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 18, fontFamily: 'Khanom')),
+                          const TextStyle(fontSize: 18)),
                     ),
                   ),
                   const SizedBox(

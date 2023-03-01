@@ -11,10 +11,7 @@ class _DoctorPageState extends State<DoctorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Doctor"),
-          backgroundColor: const Color(0xff5b3775),
-        ),
+        appBar: AppBar(title: const Text("Doctor")),
         body: Center(
           child: Column(
             children: const [Text("Test ")],

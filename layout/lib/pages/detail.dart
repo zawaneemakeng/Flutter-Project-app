@@ -23,17 +23,14 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("details"),
-        backgroundColor: const Color(0xff5b3775),
-      ),
+      appBar: AppBar(title: const Text("details")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
             Text(_v1,
                 style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff5b3775))),
             const SizedBox(
@@ -41,7 +38,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             Text(
               _v2,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
             const SizedBox(
               height: 15,
@@ -56,7 +53,7 @@ class _DetailPageState extends State<DetailPage> {
             const SizedBox(
               height: 25,
             ),
-            Text(_v4, style: TextStyle(fontSize: 18))
+            Text(_v4, style: TextStyle(fontSize: 12))
           ],
         ),
       ),

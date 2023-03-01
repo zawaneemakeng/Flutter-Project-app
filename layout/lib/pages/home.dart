@@ -15,10 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("About Cat"),
-        backgroundColor: const Color(0xff5b3775),
-      ),
+      appBar: AppBar(title: const Text("About Cat")),
       body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FutureBuilder(
@@ -57,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
       //color: const Color.fromARGB(255, 152, 205, 186),
-      height: 180,
+      height: 220,
       decoration: BoxDecoration(
           //color: const Color.fromARGB(255, 152, 205, 186),
           image: DecorationImage(
@@ -76,7 +73,7 @@ class _HomePageState extends State<HomePage> {
           Text(
             title,
             style: const TextStyle(
-                fontSize: 22,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 227, 227, 227)),
           ),
@@ -86,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           Text(
             subtitle,
             style: const TextStyle(
-                fontSize: 17, color: Color.fromARGB(255, 227, 227, 227)),
+                fontSize: 14, color: Color.fromARGB(255, 227, 227, 227)),
           ),
           const SizedBox(
             height: 10,
@@ -101,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text(
                 "Read more",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
               )),
         ],
       ),
