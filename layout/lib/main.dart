@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:layout/pages/add.dart';
 import 'package:layout/pages/cal.dart';
 import 'package:layout/pages/home.dart';
+import 'package:layout/pages/todolist.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   static const List<Widget> tabs = <Widget>[
-    AddPage(),
+    Todolist(),
     HomePage(),
     CalculatPage(),
   ];
@@ -55,8 +56,8 @@ class _MainPageState extends State<MainPage> {
         currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Doctor',
+            icon: Icon(Icons.library_books),
+            label: 'todolist',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

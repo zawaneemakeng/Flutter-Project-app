@@ -55,7 +55,7 @@ class _AddPageState extends State<AddPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 150, right: 150, top: 10, bottom: 0),
+                left: 100, right: 100, top: 10, bottom: 0),
             child: ElevatedButton(
               onPressed: () {
                 print(
@@ -63,6 +63,10 @@ class _AddPageState extends State<AddPage> {
                 print('title : ${todo_title.text}');
                 print('details : ${todo_details.text}');
                 postTodo();
+                setState(() {
+                  todo_title.clear();
+                  todo_details.clear();
+                });
               },
               child: Text('เพิ่มรายการ',
                   style: TextStyle(
@@ -73,7 +77,7 @@ class _AddPageState extends State<AddPage> {
                 elevation: 3,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: const Size(20, 50),
+                minimumSize: const Size(50, 50),
               ),
             ),
           ),
@@ -84,10 +88,10 @@ class _AddPageState extends State<AddPage> {
 
   Future postTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('abcd.ngrok.io', '/api/post-todolist');
+    var url = Uri.http('your ip', '/api/post-todolist');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
-        '{"title":"เรียนเขียนเเอป flutter ","details":"เรียนทุกวัน วันละ 1EP"}';
+        '{"title":"${todo_title.text}","details":"${todo_details.text}"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print('--------result--------');
     print(response.body);
