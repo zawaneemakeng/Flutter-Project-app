@@ -48,11 +48,12 @@ class _TodolistState extends State<Todolist> {
             child: Card(
               child: ListTile(
                 title: Text(
-                  "${todolistitems[index]}",
+                  "${todolistitems[index]['title']}",
                   style: TextStyle(fontSize: 18),
                 ),
-                leading: Icon(Icons.icecream),
+                leading: Icon(Icons.event_note),
                 tileColor: Color.fromARGB(255, 246, 237, 251),
+                onTap: () {},
               ),
             ),
           );
@@ -60,9 +61,13 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('your ip', '/api/all-todolist/');
+    var url = Uri.http('ypur ip:8000', '/api/all-todolist/');
     var response = await http.get(url);
-    var result = json.decode(response.body);
-    print('--------result--------');
+    // var result = json.decode(response.body);
+    var result = utf8.decode(response.bodyBytes);
+    print(result);
+    setState(() {
+      todolistitems = jsonDecode(result);
+    });
   }
 }

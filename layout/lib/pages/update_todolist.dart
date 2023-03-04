@@ -4,14 +4,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-class AddPage extends StatefulWidget {
-  const AddPage({super.key});
+class UpdateTodo extends StatefulWidget {
+  const UpdateTodo({super.key});
 
   @override
-  State<AddPage> createState() => _AddPageState();
+  State<UpdateTodo> createState() => _UpdateTodoState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _UpdateTodoState extends State<UpdateTodo> {
   TextEditingController todo_title = TextEditingController();
   TextEditingController todo_details = TextEditingController();
   @override
