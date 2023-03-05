@@ -16,6 +16,7 @@ def all_todolist(request):
     serializer = TodolistSerializer(all_todolist,many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+# POST Data
 @api_view(['POST'])
 def post_todolist(request):
     if request.method == 'POST':
@@ -24,8 +25,35 @@ def post_todolist(request):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND)
-    
 
+# Update Data
+@api_view(['PUT'])
+def update_todolist(request,TID):
+    todo =Todolist.objects.get(id=TID)   
+    if request.method == 'PUT': 
+        data = {}
+        serializer = TodolistSerializer(todo,data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            data['status']='updated'
+            return Response(data=data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND)
+
+# DELATE Data
+@api_view(['DELETE'])
+def delete_todolist(request,TID):
+    todo =Todolist.objects.get(id=TID)   
+    if request.method =='DELETE':
+        delete = todo.delete()
+        data = {}
+        if delete:
+            data['status'] = 'deleted'
+            statuscode=status.HTTP_200_OK
+        else:
+            data["status"] = 'failed'
+            statuscode=status.HTTP_404_NOT_FOUND
+        return Response(data=data,status=statuscode)
+        
 
 
 

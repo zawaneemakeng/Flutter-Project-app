@@ -4,20 +4,64 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+import 'package:layout/pages/todolist.dart';
+
 class UpdateTodo extends StatefulWidget {
-  const UpdateTodo({super.key});
+  //constructor
+  final v1, v2, v3;
+  const UpdateTodo(this.v1, this.v2, this.v3);
 
   @override
   State<UpdateTodo> createState() => _UpdateTodoState();
 }
 
 class _UpdateTodoState extends State<UpdateTodo> {
+  var _v1, _v2, _v3;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _v1 = widget.v1; //id
+    _v2 = widget.v2; //title
+    _v3 = widget.v3; //details
+    todo_title.text = _v2;
+    todo_details.text = _v3;
+  }
+
   TextEditingController todo_title = TextEditingController();
   TextEditingController todo_details = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add To Do List ")),
+      appBar: AppBar(
+        title: const Text("Update"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print("ID : $_v1");
+                deleteTodo();
+                final snackBar = SnackBar(
+                  content: const Text('ลบข้อมูลเรียบร้อย'),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+
+                // Find the ScaffoldMessenger in the widget tree
+                // and use it to show a SnackBar.
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.pop(context,
+                    MaterialPageRoute(builder: ((context) => Todolist())));
+              },
+              icon: Icon(
+                Icons.delete_outline_outlined,
+                color: Color.fromARGB(255, 228, 208, 242),
+              ))
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(children: [
@@ -62,13 +106,24 @@ class _UpdateTodoState extends State<UpdateTodo> {
                     '--------------------------------------------------------');
                 print('title : ${todo_title.text}');
                 print('details : ${todo_details.text}');
-                postTodo();
-                setState(() {
-                  todo_title.clear();
-                  todo_details.clear();
-                });
+                updateTodo();
+                final snackBar = SnackBar(
+                  content: const Text('เเก้ไขเรียบร้อย'),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+
+                // Find the ScaffoldMessenger in the widget tree
+                // and use it to show a SnackBar.
+                Navigator.pop(context,
+                    MaterialPageRoute(builder: ((context) => Todolist())));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
-              child: Text('เพิ่มรายการ',
+              child: Text('Update',
                   style: TextStyle(
                     fontSize: 18,
                   )),
@@ -86,13 +141,22 @@ class _UpdateTodoState extends State<UpdateTodo> {
     );
   }
 
-  Future postTodo() async {
+  Future updateTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('abcd.ngrok.io', '/api/post-todolist');
+    var url = Uri.http('abcd.ngrok.io', '/api/update-todolist/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"title":"${todo_title.text}","details":"${todo_details.text}"}';
-    var response = await http.post(url, headers: header, body: jsondata);
+    var response = await http.put(url, headers: header, body: jsondata);
+    print('--------result--------');
+    print(response.body);
+  }
+
+  Future deleteTodo() async {
+    // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
+    var url = Uri.http('abcd.ngrok.io', '/api/delete-todolist/$_v1');
+    Map<String, String> header = {"Content-type": "application/json"};
+    var response = await http.delete(url, headers: header);
     print('--------result--------');
     print(response.body);
   }

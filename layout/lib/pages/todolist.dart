@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import 'package:layout/pages/add.dart';
+import 'package:layout/pages/update_todolist.dart';
 
 class Todolist extends StatefulWidget {
   const Todolist({super.key});
@@ -34,7 +35,22 @@ class _TodolistState extends State<Todolist> {
         backgroundColor: const Color(0xff5b3775),
         foregroundColor: const Color.fromARGB(255, 169, 169, 169),
       ),
-      appBar: AppBar(title: const Text('All todolist')),
+      appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    getTodolist();
+                  });
+                },
+                icon: Icon(
+                  Icons.refresh,
+                  color: Color.fromARGB(255, 228, 208, 242),
+                ))
+          ],
+          title: const Text(
+            'All todolist',
+          )),
       body: todolistCreate(),
     );
   }
@@ -52,8 +68,21 @@ class _TodolistState extends State<Todolist> {
                   style: TextStyle(fontSize: 18),
                 ),
                 leading: Icon(Icons.event_note),
-                tileColor: Color.fromARGB(255, 246, 237, 251),
-                onTap: () {},
+                tileColor: Color.fromARGB(255, 251, 244, 255),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => UpdateTodo(
+                                todolistitems[index]['id'],
+                                todolistitems[index]['title'],
+                                todolistitems[index]['details'],
+                              )))).then((value) {
+                    setState(() {
+                      getTodolist();
+                    });
+                  });
+                },
               ),
             ),
           );
@@ -61,7 +90,7 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('ypur ip:8000', '/api/all-todolist/');
+    var url = Uri.http('abcd.ngrok.io', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);
