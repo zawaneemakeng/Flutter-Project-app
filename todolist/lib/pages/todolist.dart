@@ -6,6 +6,9 @@ import 'dart:async';
 
 import 'package:todolist/pages/add.dart';
 import 'package:todolist/pages/update_todolist.dart';
+import 'package:todolist/sqlitedb.dart';
+
+import 'package:todolist/todo.dart';
 
 class Todolist extends StatefulWidget {
   const Todolist({super.key});
@@ -16,11 +19,25 @@ class Todolist extends StatefulWidget {
 
 class _TodolistState extends State<Todolist> {
   List todolistitems = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+  List<Todo> todolist = [];
+  Todo readTodo = Todo(status: false);
+  SqliteDatabase readsql = SqliteDatabase();
+
+  readTodoSQL() async {
+    List<Todo> allList = await readsql.readTodo();
+    setState(() {
+      todolist = allList;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTodolist();
+    //getTodolist();
+    readTodoSQL();
+    readTodo.status = false;
   }
 
   @override
@@ -33,7 +50,7 @@ class _TodolistState extends State<Todolist> {
               .then((value) {
             //.then ตือให้ทำอะไรถ้ากลับมา
             setState(() {
-              getTodolist();
+              //getTodolist();
             });
           });
         },
@@ -57,7 +74,7 @@ class _TodolistState extends State<Todolist> {
           title: const Text(
             'All todolist',
           )),
-      body: todolistCreate(),
+      body: todolistCreateSQL(),
     );
   }
 
@@ -107,8 +124,65 @@ class _TodolistState extends State<Todolist> {
         });
   }
 
+  Widget todolistCreateSQL() {
+    return ListView.builder(
+        itemCount: todolist.length,
+        itemBuilder: (context, index) {
+          int todoID = todolist[index].id!;
+          String todoTitle = todolist[index].title!;
+          String todoDetails = todolist[index].details!;
+
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Card(
+              child: ListTile(
+                leading: Checkbox(
+                  value: todolist[index].status,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      todolist[index].status = value!;
+                    });
+                  },
+                ),
+                title: Text(
+                  todoTitle,
+                  style: TextStyle(fontSize: 18),
+                ),
+                tileColor: Color.fromARGB(255, 251, 244, 255),
+                onTap: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) =>
+                                  UpdateTodo(todoID, todoTitle, todoDetails))))
+                      .then((value) {
+                    //.then ตือให้ทำอะไรถ้ากลับมา
+                    setState(() {
+                      print(value);
+                      if (value == 'delate') {
+                        final snackBar = SnackBar(
+                          content: const Text('เเก้ไขเรียบร้อย'),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {},
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                      readTodoSQL();
+                    });
+                  });
+                },
+                enabled: todolist[index].status ==
+                    false, //ถ้าtodolist ถูกเช็ค ไม่สามารถทำงานได้
+              ),
+            ),
+          );
+        });
+  }
+
   Future getTodolist() async {
-    var url = Uri.http('abcd.ngrok.io', '/api/all-todolist/');
+    var url = Uri.http('ab:8000', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);

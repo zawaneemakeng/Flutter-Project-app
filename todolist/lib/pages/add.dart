@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 //http method
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:todolist/sqlitedb.dart';
 import 'dart:async';
+
+import 'package:todolist/todo.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -14,6 +17,10 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   TextEditingController todo_title = TextEditingController();
   TextEditingController todo_details = TextEditingController();
+
+  Todo addTodo = Todo(status: false);
+  SqliteDatabase addsql = SqliteDatabase();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +69,8 @@ class _AddPageState extends State<AddPage> {
                     '--------------------------------------------------------');
                 print('title : ${todo_title.text}');
                 print('details : ${todo_details.text}');
-                postTodo();
+                //postTodo();
+                addTodoSQL();
                 setState(() {
                   todo_title.clear();
                   todo_details.clear();
@@ -86,9 +94,15 @@ class _AddPageState extends State<AddPage> {
     );
   }
 
+  Future addTodoSQL() async {
+    addTodo =
+        Todo(title: todo_title.text, details: todo_details.text, status: false);
+    await addsql.createTodo(addTodo);
+  }
+
   Future postTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('abcd.ngrok.io', '/api/post-todolist');
+    var url = Uri.http('ab:8000:8000', '/api/post-todolist');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"title":"${todo_title.text}","details":"${todo_details.text}"}';

@@ -123,7 +123,7 @@ class _UpdateTodoState extends State<UpdateTodo> {
 
   Future updateTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('abcd.ngrok.io', '/api/update-todolist/$_v1');
+    var url = Uri.http('192.168.95.152:8000', '/api/update-todolist/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"title":"${todo_title.text}","details":"${todo_details.text}"}';
@@ -134,7 +134,7 @@ class _UpdateTodoState extends State<UpdateTodo> {
 
   Future deleteTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('abcd.ngrok.io', '/api/delete-todolist/$_v1');
+    var url = Uri.http('ab:8000:8000', '/api/delete-todolist/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     var response = await http.delete(url, headers: header);
     print('--------result--------');
