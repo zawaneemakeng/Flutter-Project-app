@@ -98,6 +98,7 @@ class _AddPageState extends State<AddPage> {
     addTodo =
         Todo(title: todo_title.text, details: todo_details.text, status: false);
     await addsql.createTodo(addTodo);
+    Navigator.pop(context, 'add');
   }
 
   Future postTodo() async {

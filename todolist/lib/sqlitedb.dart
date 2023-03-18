@@ -5,7 +5,7 @@ import 'package:todolist/todo.dart';
 class SqliteDatabase {
   late Database database;
   final String dbFile = 'todo.sqlite3';
-  final String tableName = 'Todo';
+  final String tableName = 'Todolist';
   final String idField = 'id';
   final String titleField = 'title';
   final String detailsField = 'details';
@@ -13,16 +13,19 @@ class SqliteDatabase {
 
   //เปิดใช้งานdatabase
   Future initDatabase() async {
-    database = await openDatabase(join(await getDatabasesPath(), dbFile),
-        version: 1, onCreate: ((db, version) async {
-      await db.execute('''CREATE TABLE $tableName(
+    database = await openDatabase(
+      join(await getDatabasesPath(), dbFile),
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''CREATE TABLE $tableName(
         $idField INTEGER PRIMARY KEY AUTOINCREMENT,
         $titleField TEXT,
         $detailsField TEXT,
         $statusField INTEGER
       );
       ''');
-    }));
+      },
+    );
   }
 
   Future createTodo(Todo todo) async {

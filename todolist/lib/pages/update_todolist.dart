@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import 'package:todolist/pages/todolist.dart';
+import 'package:todolist/sqlitedb.dart';
+import 'package:todolist/todo.dart';
 
 class UpdateTodo extends StatefulWidget {
   //constructor
@@ -30,6 +32,10 @@ class _UpdateTodoState extends State<UpdateTodo> {
 
   TextEditingController todo_title = TextEditingController();
   TextEditingController todo_details = TextEditingController();
+
+  Todo edittodo = Todo(status: false);
+  SqliteDatabase editsql = SqliteDatabase();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +45,8 @@ class _UpdateTodoState extends State<UpdateTodo> {
           IconButton(
               onPressed: () {
                 print("ID : $_v1");
-                deleteTodo();
+                //deleteTodo();
+                deleteTodoSQL();
                 Navigator.pop(context, 'delate');
               },
               icon: Icon(
@@ -92,7 +99,8 @@ class _UpdateTodoState extends State<UpdateTodo> {
                     '--------------------------------------------------------');
                 print('title : ${todo_title.text}');
                 print('details : ${todo_details.text}');
-                updateTodo();
+                //updateTodo();
+                updateTodoSQL(context);
                 final snackBar = SnackBar(
                   content: const Text('เเก้ไขเรียบร้อย'),
                   action: SnackBarAction(
@@ -119,6 +127,20 @@ class _UpdateTodoState extends State<UpdateTodo> {
         ]),
       ),
     );
+  }
+
+  Future updateTodoSQL(BuildContext context) async {
+    edittodo = Todo(
+        id: _v1,
+        title: todo_title.text,
+        details: todo_details.text,
+        status: false);
+    await editsql.updateTodo(edittodo);
+    Navigator.pop(context, true);
+  }
+
+  Future deleteTodoSQL() async {
+    await editsql.delateTodo(_v1);
   }
 
   Future updateTodo() async {
