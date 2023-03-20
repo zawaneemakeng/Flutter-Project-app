@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/pages/login.dart';
 import 'package:todolist/pages/todolist.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Todolist(),
+      home: LoginPage(),
       theme: ThemeData(
           fontFamily: 'Khanom',
           appBarTheme:
