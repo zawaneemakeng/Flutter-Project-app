@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from  rest_framework import status
 from .serializers import TodolistSerializer
-from .models import Todolist
+from .models import Todolist,Profile
+import uuid
 
 
 
@@ -55,8 +56,53 @@ def delete_todolist(request,TID):
         return Response(data=data,status=statuscode)
         
 
+# POST Data New User
+from django.contrib.auth.models import User
+
+@api_view(['POST'])
+def rigister_newuser(request):
+    if request.method == 'POST':
+        data = request.POST.copy()
+        username = data.get('username')
+        password = data.get('password')
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        mobile = data.get('mobile')
+        print('Check User ',username,password)
+        # ตววจสอบว่ามี account ?
+        if username == None and password == None:
+            dt ={'status':'username and password required'}
+            return Response(data=dt,status=status.HTTP_400_BAD_REQUEST)
 
 
+        check = User.objects.filter(username=username)
+        if len(check) == 0:
+            newuser = User()
+            newuser.username = username
+            newuser.set_password(password) #ฟังก์ชั่นการเข้ารหัส 
+            newuser.first_name = first_name
+            newuser.last_name = last_name
+            newuser.save()
+            
+            newprofile = Profile()
+            newprofile.user = User.objects.get(username=username)
+            newprofile.mobile = mobile
+
+            gentoken = uuid.uuid1().hex
+            newprofile.token = gentoken
+            newprofile.save()
+            dt = {'status': 'user_created',
+                   'token':gentoken,
+                   'first_name':first_name,
+                   'last_name':last_name,
+                   'username':username}
+            return Response(data=dt,status=status.HTTP_201_CREATED)
+        else :
+            dt ={'status':'user-exist'}
+            return Response(data=dt,status=status.HTTP_400_BAD_REQUEST)
+
+
+   
 
 data = [{
         "title": "บริติช ช็อตแฮร์ (British Shorthair)",

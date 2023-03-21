@@ -7,5 +7,7 @@ urlpatterns = [
     path('api/post-todolist', post_todolist),
     path('api/update-todolist/<int:TID>', update_todolist),
     path('api/delete-todolist/<int:TID>', delete_todolist),
+    path('api/newuser', rigister_newuser),
 
 ]
+# post req ไม่ต้อง/
