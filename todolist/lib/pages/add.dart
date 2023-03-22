@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//http method
+import 'package:todolist/sqlitedb.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:todolist/sqlitedb.dart';
+
 import 'dart:async';
 
 import 'package:todolist/todo.dart';
@@ -103,7 +103,7 @@ class _AddPageState extends State<AddPage> {
 
   Future postTodo() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('ab:8000:8000', '/api/post-todolist');
+    var url = Uri.http('-----------:8000', '/api/post-todolist');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"title":"${todo_title.text}","details":"${todo_details.text}"}';
