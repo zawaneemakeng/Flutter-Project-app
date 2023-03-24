@@ -10,6 +10,7 @@ import uuid
 
 
 
+
 # GET Data
 @api_view(['GET'])
 def all_todolist(request):
@@ -62,7 +63,13 @@ from django.contrib.auth.models import User
 @api_view(['POST'])
 def rigister_newuser(request):
     if request.method == 'POST':
-        data = request.POST.copy()
+        print(request.body)
+        print(type(request.data))
+        datadict = request.data
+        data = request.data
+        print("FN :",datadict['first_name'])
+        #data = request.POST.copy() ใช้กับเว็บ
+        print(data)
         username = data.get('username')
         password = data.get('password')
         first_name = data.get('first_name')
@@ -100,9 +107,34 @@ def rigister_newuser(request):
         else :
             dt ={'status':'user-exist'}
             return Response(data=dt,status=status.HTTP_400_BAD_REQUEST)
+        
 
+from django.contrib.auth import authenticate,login
+@api_view(['POST'])
+def authenticate_app(request):
+    if request.method == 'POST':
+        data = request.data
+        username = data.get('username')
+        password = data.get('password')
+        try:
+            user =  authenticate(username=username, password=password)
+            login(request,user)
+            getuser = User.objects.get(username=username)
+            dt = {'status': 'login-success',
+                   'token':getuser.profile.token,
+                   'first_name':getuser.first_name,
+                   'last_name':getuser.last_name,
+                   'username':getuser.username}
+            print('Success',dt)
+            return Response(data=dt,status=status.HTTP_200_OK) 
+        except:
+            dt = {'status': 'login-failed'}
+            print('failed',dt)
+            return Response(data=dt,status=status.HTTP_400_BAD_REQUEST) 
 
    
+
+
 
 data = [{
         "title": "บริติช ช็อตแฮร์ (British Shorthair)",
