@@ -10,6 +10,8 @@ import 'package:todolist/sqlitedb.dart';
 
 import 'package:todolist/todo.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Todolist extends StatefulWidget {
   const Todolist({super.key});
 
@@ -19,6 +21,7 @@ class Todolist extends StatefulWidget {
 
 class _TodolistState extends State<Todolist> {
   List todolistitems = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+  String fullname = '';
 
   List<Todo> todolist = [];
   Todo readTodo = Todo(status: false);
@@ -38,6 +41,7 @@ class _TodolistState extends State<Todolist> {
     //getTodolist();
     readTodoSQL();
     readTodo.status = false;
+    check(); //ตรวจสอบว่ามีชื่อหรือไป ถ้ามีสวัสดี
   }
 
   @override
@@ -74,7 +78,9 @@ class _TodolistState extends State<Todolist> {
           title: const Text(
             'All todolist',
           )),
-      body: todolistCreateSQL(),
+      body: ListView(children: [
+        Center(child: Text(fullname)),
+      ]),
     );
   }
 
@@ -182,7 +188,7 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('--------:8000', '/api/all-todolist/');
+    var url = Uri.http('---------:8000', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);
@@ -190,5 +196,21 @@ class _TodolistState extends State<Todolist> {
     setState(() {
       todolistitems = jsonDecode(result);
     });
+  }
+
+  void getFullname() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      var first_name = pref.getString('first_name');
+      fullname = 'สวัสดีคุณ $first_name';
+    });
+  }
+
+  void check() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final checkvalue = pref.get('first_name') ?? 0;
+    if (checkvalue != 0) {
+      getFullname();
+    }
   }
 }

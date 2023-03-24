@@ -109,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future register_newuser() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('-------:8000', '/api/newuser');
+    var url = Uri.http('---------:8000', '/api/newuser');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String v1 = '"username":"${username.text}"';
@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (status == 'user_created') {
       String t1 = result_json['first_name'];
       String t2 = result_json['last_name'];
-      String token = result_json['token'];
+      String token = result_json['token']; //ดึง
       setToken(token); //เมื่อได้รับ tokenเเล้วให้บันทึกในระบบ
       String setresult = 'ยินดีด้วย คุณ $t1 $t2\n คุณได้สมัคสมาชิกเรียบร้อย';
       setState(() {
