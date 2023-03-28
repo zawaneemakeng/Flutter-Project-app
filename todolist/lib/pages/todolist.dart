@@ -12,6 +12,7 @@ import 'package:todolist/sqlitedb.dart';
 import 'package:todolist/todo.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Todolist extends StatefulWidget {
   const Todolist({super.key});
@@ -228,7 +229,7 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('---------:8000', '/api/all-todolist/');
+    var url = Uri.http('--------:8000', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);
@@ -251,6 +252,15 @@ class _TodolistState extends State<Todolist> {
     final checkvalue = pref.get('first_name') ?? 0;
     if (checkvalue != 0) {
       getFullname();
+    }
+  }
+
+  void launchUrl() async {
+    var url = 'https://www.uncle-engineer.com/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Cannot Launch $url";
     }
   }
 }

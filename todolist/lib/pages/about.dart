@@ -7,6 +7,16 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('About App')),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              "เกี่ยวกับเเอป",
+            ),
+            Text("this is application about todolist ")
+          ],
+        ),
+      ),
     );
   }
 }
