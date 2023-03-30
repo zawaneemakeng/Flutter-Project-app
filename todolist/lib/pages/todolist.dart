@@ -6,6 +6,7 @@ import 'package:todolist/pages/about.dart';
 import 'dart:async';
 
 import 'package:todolist/pages/add.dart';
+import 'package:todolist/pages/login.dart';
 import 'package:todolist/pages/update_todolist.dart';
 import 'package:todolist/sqlitedb.dart';
 
@@ -154,14 +155,14 @@ class _TodolistState extends State<Todolist> {
             leading: Icon(Icons.contact_mail),
             title: Text('contact'),
             onTap: () {
-              Navigator.pop(context);
+              launchUrl();
             },
           ),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('logout'),
             onTap: () {
-              Navigator.pop(context);
+              logout(context);
             },
           ),
         ],
@@ -229,7 +230,7 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('--------:8000', '/api/all-todolist/');
+    var url = Uri.http('---------:8000', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);
@@ -256,11 +257,21 @@ class _TodolistState extends State<Todolist> {
   }
 
   void launchUrl() async {
+    //Uri _url = Uri.parse('https://flutter.dev');
     var url = 'https://www.uncle-engineer.com/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw "Cannot Launch $url";
     }
+  }
+
+  void logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoginPage())); //ออกไปโดยไม่ลูกศรย้อนกลับ
   }
 }
