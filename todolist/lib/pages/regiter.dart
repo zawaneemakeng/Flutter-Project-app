@@ -25,15 +25,15 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register Page"),
+        title: const Text("Register Page"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
             child: ListView(
           children: [
-            Text("Register"),
-            SizedBox(
+            const Text("Register"),
+            const SizedBox(
               height: 30,
             ),
             Image.network(
@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 100,
               width: 100,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TextField(
@@ -49,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Email'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(),
                   labelText: 'Password'), //ขนาดของช่องกรอก
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(),
                   labelText: 'ชื่อ'), //ขนาดของช่องกรอก
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(),
                   labelText: 'นามสกุล'), //ขนาดของช่องกรอก
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(),
                   labelText: 'เบอร์โทรศัพท์'), //ขนาดของช่องกรอก
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -94,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   register_newuser();
                 },
                 child: Text("Register")),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
