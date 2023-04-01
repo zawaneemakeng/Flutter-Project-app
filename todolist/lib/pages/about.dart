@@ -10,10 +10,10 @@ class AboutPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(
+            const Text(
               "เกี่ยวกับเเอป",
             ),
-            Text("this is application about todolist ")
+            const Text("this is application about todolist ")
           ],
         ),
       ),

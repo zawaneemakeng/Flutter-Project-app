@@ -102,7 +102,7 @@ class _TodolistState extends State<Todolist> {
                     "${todolistitems[index]['title']}",
                     style: TextStyle(fontSize: 18),
                   ),
-                  leading: Icon(Icons.event_note),
+                  leading: const Icon(Icons.event_note),
                   tileColor: Color.fromARGB(255, 251, 244, 255),
                   onTap: () {
                     Navigator.push(
@@ -144,23 +144,23 @@ class _TodolistState extends State<Todolist> {
           UserAccountsDrawerHeader(
               accountName: Text(fullname), accountEmail: null),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('home'),
+            leading: const Icon(Icons.home),
+            title: const Text('home'),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AboutPage()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.contact_mail),
-            title: Text('contact'),
+            leading: const Icon(Icons.contact_mail),
+            title: const Text('contact'),
             onTap: () {
               launchUrl();
             },
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('logout'),
+            leading: const Icon(Icons.logout),
+            title: const Text('logout'),
             onTap: () {
               logout(context);
             },
