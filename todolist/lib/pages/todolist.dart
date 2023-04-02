@@ -74,7 +74,7 @@ class _TodolistState extends State<Todolist> {
                     getTodolist();
                   });
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.refresh,
                   color: Color.fromARGB(255, 228, 208, 242),
                 ))
@@ -83,7 +83,7 @@ class _TodolistState extends State<Todolist> {
             'All todolist',
           )),
       body: Column(children: [
-        Center(child: Text("รายการสิ่งที่ต้องทำ")),
+        Center(child: const Text("รายการสิ่งที่ต้องทำ")),
         todolistCreateSQL()
       ]),
     );
@@ -195,7 +195,7 @@ class _TodolistState extends State<Todolist> {
                     todoTitle,
                     style: TextStyle(fontSize: 18),
                   ),
-                  tileColor: Color.fromARGB(255, 251, 244, 255),
+                  tileColor: const Color.fromARGB(255, 251, 244, 255),
                   onTap: () {
                     Navigator.push(
                             context,
