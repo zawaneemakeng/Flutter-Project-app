@@ -76,7 +76,7 @@ class _AddPageState extends State<AddPage> {
                   todo_details.clear();
                 });
               },
-              child: Text('เพิ่มรายการ',
+              child: const Text('เพิ่มรายการ',
                   style: TextStyle(
                     fontSize: 18,
                   )),

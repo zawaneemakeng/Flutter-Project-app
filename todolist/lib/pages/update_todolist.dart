@@ -49,7 +49,7 @@ class _UpdateTodoState extends State<UpdateTodo> {
                 deleteTodoSQL();
                 Navigator.pop(context, 'delate');
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete_outline_outlined,
                 color: Color.fromARGB(255, 228, 208, 242),
               ))

@@ -6,14 +6,14 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('About App')),
+      appBar: AppBar(title: const Text('About App')),
       body: Center(
         child: Column(
-          children: [
-            const Text(
+          children: const [
+            Text(
               "เกี่ยวกับเเอป",
             ),
-            const Text("this is application about todolist ")
+            Text("this is application about todolist ")
           ],
         ),
       ),
