@@ -28,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
             child: ListView(
           children: [
-            Text("Login"),
-            SizedBox(
+            const Text("Login"),
+            const SizedBox(
               height: 30,
             ),
             Image.network(
