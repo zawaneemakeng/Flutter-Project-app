@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), labelText: 'Username'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
