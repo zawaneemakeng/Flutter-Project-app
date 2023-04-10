@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           builder: ((context) => RegisterPage())));
                 },
                 child: Text("Regiter")),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
