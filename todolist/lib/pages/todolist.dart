@@ -148,7 +148,7 @@ class _TodolistState extends State<Todolist> {
             title: const Text('home'),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AboutPage()));
+                  MaterialPageRoute(builder: (context) => const AboutPage()));
             },
           ),
           ListTile(
