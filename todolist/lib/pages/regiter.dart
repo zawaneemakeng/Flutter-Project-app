@@ -109,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future register_newuser() async {
     // var url = Uri.https('abcd.ngrok.io', '/api/post-todolist');
-    var url = Uri.http('1--------:8000', '/api/newuser');
+    var url = Uri.http('000000:8000', '/api/newuser');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String v1 = '"username":"${username.text}"';

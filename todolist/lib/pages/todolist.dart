@@ -70,9 +70,10 @@ class _TodolistState extends State<Todolist> {
           actions: [
             IconButton(
                 onPressed: () {
-                  setState(() {
-                    getTodolist();
-                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AboutPage()));
                 },
                 icon: const Icon(
                   Icons.refresh,
@@ -83,7 +84,7 @@ class _TodolistState extends State<Todolist> {
             'All todolist',
           )),
       body: Column(children: [
-        Center(child: const Text("รายการสิ่งที่ต้องทำ")),
+        Center(child: Text("รายการสิ่งที่ต้องทำ")),
         todolistCreateSQL()
       ]),
     );
@@ -230,7 +231,7 @@ class _TodolistState extends State<Todolist> {
   }
 
   Future getTodolist() async {
-    var url = Uri.http('1--------', '/api/all-todolist/');
+    var url = Uri.http('------:8000', '/api/all-todolist/');
     var response = await http.get(url);
     // var result = json.decode(response.body);
     var result = utf8.decode(response.bodyBytes);
