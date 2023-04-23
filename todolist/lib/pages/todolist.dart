@@ -62,7 +62,7 @@ class _TodolistState extends State<Todolist> {
             });
           });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: const Color(0xff5b3775),
         foregroundColor: const Color.fromARGB(255, 169, 169, 169),
       ),
