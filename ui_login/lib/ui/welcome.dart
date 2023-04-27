@@ -17,7 +17,7 @@ class Welcome extends StatelessWidget {
           stops: [2.0, 1.0],
           tileMode: TileMode.clamp,
           colors: [
-            Color(0xff064851),
+            Color(0xff1C6946),
             Color(0xff00DD73),
           ],
         )),
@@ -28,7 +28,7 @@ class Welcome extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 20.0),
@@ -42,7 +42,7 @@ class Welcome extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                      child: Align(
+                      child: const Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 20.0),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ui_login/ui/register.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class Register extends StatelessWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -147,28 +146,14 @@ class Home extends StatelessWidget {
                         width: size.width * .8,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                                child: const Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 20.0),
-                                    child: Text(
-                                      "สมัครบัญชี",
-                                      style: TextStyle(
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Register()),
-                                  );
-                                }),
-                            const Text(
+                          children: const [
+                            Text(
+                              'สมัครบัญชี',
+                              style: TextStyle(
+                                color: Colors.black54,
+                              ),
+                            ),
+                            Text(
                               'ลืมรหัสผ่าน?',
                               style: TextStyle(
                                 color: Colors.black54,
