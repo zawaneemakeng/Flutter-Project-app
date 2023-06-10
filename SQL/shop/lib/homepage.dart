@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop/product.dart';
-import 'package:shop/sqlite.dart';
-import 'package:shop/updatepage.dart';
+import 'package:shop/model/prodect.dart';
+import 'package:shop/sqldb/sqlitedb.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -12,11 +11,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final pdName = TextEditingController();
-  final pdQuantity = TextEditingController();
-  final pdPrice = TextEditingController();
+  var pdNameCtrl = TextEditingController();
+  var pdPriceCtrl = TextEditingController();
+  var pdQuantityCtrl = TextEditingController();
 
-  Product product = Product(inStock: false);
+  Product product = Product(status: false);
   SQLiteDatabase dbHelper = SQLiteDatabase();
   List<Product> pdList = [];
 
@@ -30,83 +29,65 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    product.inStock = false;
+    product.status = false;
     _refreshList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Image.network(
-            'https://cdn-icons-png.flaticon.com/512/2981/2981313.png',
-            height: 100,
-            width: 100,
-          ),
-          SizedBox(height: 20),
-          buildForm(),
-          SizedBox(height: 10),
-          buildListView(),
-        ],
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple[500],
+        toolbarHeight: 30,
+        title: Text(widget.title),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(children: [buildForm(), buildListView()]),
       ),
     );
   }
 
   Widget buildForm() {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Product Name',
-              border: OutlineInputBorder(),
-            ),
-            controller: pdName,
-          ),
-          SizedBox(height: 20),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Product Quantity', border: OutlineInputBorder()),
-            controller: pdQuantity,
-            keyboardType: TextInputType.number,
-          ),
-          SizedBox(height: 20),
-          TextField(
-            decoration: InputDecoration(
-                labelText: 'Product Price', border: OutlineInputBorder()),
-            controller: pdPrice,
-            keyboardType: TextInputType.number,
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('มีสินค้าในสต๊อคหรือไม่'),
-              Checkbox(
-                  value: product.inStock,
-                  onChanged: ((value) {
-                    setState(() {
-                      product.inStock = value!;
-                    });
-                  }))
-            ],
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-              onPressed: () {
-                if (pdName.text.isNotEmpty &&
-                    pdQuantity.text.isNotEmpty &&
-                    pdPrice.text.isNotEmpty) {
-                  saveData();
-                }
-              },
-              child: Text('บันทึก'))
-        ],
-      ),
+    return Column(
+      children: [
+        TextField(
+          decoration: InputDecoration(labelText: 'ชื่อสินค้า'),
+          controller: pdNameCtrl,
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: 'ราคาต่อหน่วย'),
+          controller: pdPriceCtrl,
+          keyboardType: TextInputType.number,
+        ),
+        TextField(
+          decoration: InputDecoration(labelText: 'จำนวน'),
+          controller: pdQuantityCtrl,
+          keyboardType: TextInputType.number,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('มีสินค้าในสต๊อกหรือไม่'),
+            Checkbox(
+                value: product.status,
+                onChanged: (value) {
+                  setState(() {
+                    product.status = value!;
+                  });
+                })
+          ],
+        ),
+        ElevatedButton(
+            onPressed: () {
+              if (pdNameCtrl.text.isNotEmpty &&
+                  pdPriceCtrl.text.isNotEmpty &&
+                  pdQuantityCtrl.text.isNotEmpty) {
+                saveData();
+              }
+            },
+            child: Text('บันทึก'))
+      ],
     );
   }
 
@@ -118,11 +99,11 @@ class _HomePageState extends State<HomePage> {
                   itemCount: pdList.isEmpty ? 0 : pdList.length,
                   itemBuilder: (context, index) {
                     int pdId = pdList[index].id!;
-                    String pdName = pdList[index].productName!;
+                    String pdName = pdList[index].name!;
                     int pdQuan = pdList[index].quantity!;
                     double pdPrice = pdList[index].price!;
                     double pdTotal = pdList[index].total!;
-                    bool pdinStock = pdList[index].inStock;
+                    bool pdstatus = pdList[index].status;
                     return Column(
                       children: [
                         ListTile(
@@ -133,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                               Text('Quantity $pdQuan'),
                               Text('price $pdPrice'),
                               Text('total $pdTotal'),
-                              Text('Stock ${pdinStock ? "มี" : "ไม่มี"}')
+                              Text('Stock ${pdstatus ? "มี" : "ไม่มี"}')
                             ],
                           ),
                           trailing: SizedBox(
@@ -143,14 +124,14 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 IconButton(
                                     onPressed: () async {
-                                      bool updateed = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => UpdatePage(
-                                                  editProduct: pdList[index])));
-                                      if (updateed == true) {
-                                        _refreshList();
-                                      }
+                                      // bool updateed = await Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => UpdatePage(
+                                      //             editProduct: pdList[index])));
+                                      // if (updateed == true) {
+                                      //   _refreshList();
+                                      // }
                                     },
                                     icon: Icon(
                                       Icons.edit,
@@ -172,24 +153,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //Method save to database
   saveData() async {
-    product.productName = pdName.text;
-    product.quantity = int.parse(pdQuantity.text);
-    product.price = double.parse(pdPrice.text);
+    product.name = pdNameCtrl.text;
+    product.price = double.parse(pdPriceCtrl.text);
+    product.quantity = int.parse(pdQuantityCtrl.text);
     product.total = product.quantity! * product.price!;
 
     product = Product(
-        productName: product.productName,
-        quantity: product.quantity,
+        name: product.name,
         price: product.price,
+        quantity: product.quantity,
         total: product.total,
-        inStock: product.inStock);
-    await dbHelper.createdProduct(product);
+        status: product.status);
+
+    //เรีนกใช้database object in class database
+    await dbHelper.createProduct(product);
     setState(() {
-      pdName.text = '';
-      pdQuantity.text = '';
-      pdPrice.text = '';
-      product.inStock = false;
+      pdNameCtrl.text = '';
+      pdPriceCtrl.text = '';
+      pdQuantityCtrl.text = '';
+      product.status = false;
     });
     await _refreshList();
   }
